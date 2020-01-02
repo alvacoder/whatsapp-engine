@@ -16,7 +16,7 @@ app.use(express.json())
 app.use
 
 // Send message to whatsapp user
-app.post('/', (req, res)=> {
+app.post('/send', (req, res)=> {
     const from = 'whatsapp:+14155238886'
     const { body, recipient } = req.body
     //console.log(req.body);
