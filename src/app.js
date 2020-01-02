@@ -18,6 +18,7 @@ app.post('/', (req, res)=> {
     const payload = {
         body,
         from,
+        statusCallback: 'http://7371162f.ngrok.io/status',
         to: `whatsapp:${recipient}`
     }
 
