@@ -49,7 +49,20 @@ app.get('/logs', async(req, res) => {
     })
 }) */
 
+//Chat logs by recipient
+app.get('/chat/:recipient', async(req, res)=> {
+    const to = req.params.recipient
 
+    try {
+        let msgHistory = await client.messages.list({
+            to,
+            limit: 5
+        })
+        res.send(msgHistory)
+    } catch (error) {
+        res.status(400).send();
+    }
+})
 
 app.listen(port, ()=> {
     console.log('app running on port ', port)
