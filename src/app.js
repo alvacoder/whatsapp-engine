@@ -28,6 +28,10 @@ app.post('/', (req, res)=> {
     }).done()
 })
 
+app.get('/', (req, res)=> {
+    res.send('hello whatsapp')
+})
+
 
 app.listen(port, ()=> {
     console.log('app running on port ', port)
