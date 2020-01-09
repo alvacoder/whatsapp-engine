@@ -12,7 +12,9 @@ const accessKey = process.env.MESSAGEBIRD_ACCESS_KEY,
 
 
 const messagebird = require('messagebird')(accessKey, null, ["ENABLE_CONVERSATIONSAPI_WHATSAPP_SANDBOX"])
-let conversations = messagebird.conversations
+const conversations = messagebird.conversations,
+      webhooks = messagebird.webhooks
+
 const port = process.env.PORT || 3800
 
 app.use(express.json())
@@ -28,7 +30,21 @@ app.post('/balance', async (req, res) => {
     });
 })
 
-//create webhooks
+//create messages webhooks
+const params = {
+    events: [
+        message.created,
+        message.updated
+    ],
+    channelId,
+    url: msgHook
+}
+webhooks.create(params, function (err, response) {
+    if(err) {
+        return console.log(err)
+    }
+    console.log('msg webhook created')
+})
 
 // start a conversation
 app.post('/start', (req, res)=> {
