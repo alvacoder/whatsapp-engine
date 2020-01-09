@@ -28,6 +28,39 @@ app.post('/balance', async (req, res) => {
     });
 })
 
+//create webhooks
+
+// start a conversation
+app.post('/start', (req, res)=> {
+    let payload = {
+        'to': '2347085183282',
+        channelId,
+        'type': 'hsm',
+        'content': {
+                'hsm': {
+                'namespace': 'eb4d5655_295e_4ada_8614_702a0efe2c85',
+                'templateName': 'verification',
+                'language': {
+                    'policy': 'deterministic',
+                    'code': 'en'
+                },
+                'params': [
+                    {"default": "MessageBird"},
+                    {"default": "123456"},
+                ]
+                }
+            }
+        }
+
+    conversations.start(payload, (err, response) => {
+        if(err) {
+            return res.send(err)
+        }
+        console.log(response)
+        let conversationsId = response.id
+        res.send(response)
+    })
+})
 
 
 
