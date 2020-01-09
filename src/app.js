@@ -64,6 +64,16 @@ webhooks.create(convHookParams, function (err, response) {
 })
  */
 
+ //list all webhooks
+ app.get('/webhooks', (req, res) => {
+    let webhooksList = webhooks.list(function(err, response) {
+        if (err) {
+            return console.log(err);
+            }
+            res.send(response)
+    })
+})
+
 // start a conversation
 app.post('/start', (req, res)=> {
     let payload = {
