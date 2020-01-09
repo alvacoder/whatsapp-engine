@@ -6,8 +6,8 @@ dotenv.config()
 const accessKey = process.env.MESSAGEBIRD_ACCESS_KEY,
     channelId = process.env.MESSAGEBIRD_CHANNEL_ID,
     reportUrl = process.env.MESSAGEBIRD_REPORT_URL,
-    msgHook = process.env.MESSAGEBIRD_MSG_HOOK,
-    convHook = process.env.MESSAGEBIRD_CONV_HOOK
+    msgHookUrl = process.env.MESSAGEBIRD_MSG_HOOK,
+    convHookUrl = process.env.MESSAGEBIRD_CONV_HOOK
 
 
 
@@ -31,19 +31,35 @@ app.post('/balance', async (req, res) => {
 })
 
 //create messages webhooks
-const params = {
+const msgHookParams = {
     events: [
-        message.created,
-        message.updated
+        'message.created',
+        'message.updated'
     ],
     channelId,
-    url: msgHook
+    url: msgHookUrl
 }
-webhooks.create(params, function (err, response) {
+webhooks.create(msgHookParams, function (err, response) {
     if(err) {
         return console.log(err)
     }
     console.log('msg webhook created')
+})
+
+//create conversations webhook
+const convHookParams = {
+    events: [
+        'conversation.created',
+        'conversation.updated'
+    ],
+    channelId,
+    url: convHookUrl
+}
+webhooks.create(convHookParams, function (err, response) {
+    if(err) {
+        return console.log(err)
+    }
+    console.log('conversation webhook created')
 })
 
 // start a conversation
