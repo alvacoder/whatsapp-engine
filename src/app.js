@@ -13,7 +13,7 @@ const accessKey = process.env.MESSAGEBIRD_ACCESS_KEY,
 
 const messagebird = require('messagebird')(accessKey, null, ["ENABLE_CONVERSATIONSAPI_WHATSAPP_SANDBOX"])
 const conversations = messagebird.conversations,
-      webhooks = messagebird.webhooks
+      webhooks = conversations.webhooks
 
 const port = process.env.PORT || 3800
 
@@ -46,7 +46,8 @@ webhooks.create(msgHookParams, function (err, response) {
     console.log('msg webhook created')
 })
 
-//create conversations webhook
+//create conversations webhook - won't work in sandbox environment
+/* 
 const convHookParams = {
     events: [
         'conversation.created',
@@ -61,6 +62,7 @@ webhooks.create(convHookParams, function (err, response) {
     }
     console.log('conversation webhook created')
 })
+ */
 
 // start a conversation
 app.post('/start', (req, res)=> {
