@@ -62,6 +62,24 @@ app.post('/start', (req, res)=> {
     })
 })
 
+// Send message
+app.post('/reply', (req, res)=> {
+    var params = {
+    'to': '+2347085183282',
+    channelId,
+    'type': 'text',
+    'content': { 'text': 'Hello!' }
+    };
+
+    messagebird.conversations.start(params, function (err, response) {
+        if (err) {
+        return console.log(err);
+        }
+        console.log(response);
+      });
+})
+
+//Message Logs by Date
 
 
 app.listen(port, ()=> {
