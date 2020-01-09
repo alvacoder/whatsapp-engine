@@ -31,19 +31,22 @@ app.post('/balance', async (req, res) => {
 })
 
 //create messages webhooks
-const msgHookParams = {
-    events: [
-        'message.created',
-        'message.updated'
-    ],
-    channelId,
-    url: msgHookUrl
-}
-webhooks.create(msgHookParams, function (err, response) {
-    if(err) {
-        return console.log(err)
+app.post('/webhooks/create', (req, res) => {
+    const msgHookParams = {
+        events: [
+            'message.created',
+            'message.updated'
+        ],
+        channelId,
+        url: msgHookUrl
     }
-    console.log('msg webhook created')
+    webhooks.create(msgHookParams, function (err, response) {
+        if(err) {
+            return console.log(err)
+        }
+        console.log('msg webhook created')
+        return res.send(response)
+    })
 })
 
 //create conversations webhook - won't work in sandbox environment
@@ -101,7 +104,7 @@ app.post('/start', (req, res)=> {
             return res.send(err)
         }
         console.log(response)
-        let conversationsId = response.id
+        let conversationId = response.id
         res.send(response)
     })
 })
