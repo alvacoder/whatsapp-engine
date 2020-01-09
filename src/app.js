@@ -17,7 +17,8 @@ const conversations = messagebird.conversations,
 
 const port = process.env.PORT || 3800
 
-app.use(express.json())
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended : true }))
 
 //Get Messagebird Credit Balance
 app.post('/balance', async (req, res) => {
@@ -109,20 +110,21 @@ app.post('/start', (req, res)=> {
     })
 })
 
-// Send message
+// Send message (conversation id saved in database)
 app.post('/reply', (req, res)=> {
-    var params = {
-    'to': '+2347085183282',
-    channelId,
+    let conversationId = req.body.convId,
+        msg = req.body.msg
+    let payload = {
     'type': 'text',
-    'content': { 'text': 'Hello!' }
+    'content': { 'text': msg },
+    'source': {'ATB' : 'Whatsapp Engine'}
     };
 
-    messagebird.conversations.start(params, function (err, response) {
+    conversations.reply(conversationId, payload, function (err, response) {
         if (err) {
         return console.log(err);
         }
-        console.log(response);
+        res.send(response);
       });
 })
 
