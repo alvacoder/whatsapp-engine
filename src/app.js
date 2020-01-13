@@ -110,7 +110,7 @@ app.post('/start', (req, res)=> {
     })
 })
 
-// Send message (conversation id saved in database)
+// Reply Conversation (conversation id saved in database)
 app.post('/reply', (req, res)=> {
     let conversationId = req.body.convId,
         msg = req.body.msg
