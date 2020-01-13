@@ -20,6 +20,10 @@ const port = process.env.PORT || 3800
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended : true }))
 
+app.get('/', (req, res) => {
+    res.send('Welcome to ATB Whatsapp Engine 1.0')
+})
+
 //Get Messagebird Credit Balance
 app.post('/balance', async (req, res) => {
     let balance = messagebird.balance.read(function (err, data) {
