@@ -25,7 +25,7 @@ app.get('/', (req, res) => {
 })
 
 //Get Messagebird Credit Balance
-app.post('/balance', async (req, res) => {
+app.get('/balance', async (req, res) => {
     let balance = messagebird.balance.read(function (err, data) {
         if (err) {
         return console.log(err);
