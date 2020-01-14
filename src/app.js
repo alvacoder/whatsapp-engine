@@ -26,6 +26,14 @@ app.get('/', (req, res) => {
     res.send('Welcome to ATB Whatsapp Engine 1.0')
 })
 
+let query = 'SELECT * FROM roles'
+db.query(query, (error, result, fields)=> {
+    if(error) {
+        return console.log(error)
+    }
+    console.log(result)
+})
+
 //Get Messagebird Credit Balance
 app.get('/balance', async (req, res) => {
     let balance = messagebird.balance.read(function (err, data) {
