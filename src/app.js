@@ -2,6 +2,8 @@ const express = require('express')
 const app = express()
 const dotenv = require('dotenv')
 const bodyParser = require('body-parser')
+const db = require('./db')
+
 dotenv.config()
 const accessKey = process.env.MESSAGEBIRD_ACCESS_KEY,
     channelId = process.env.MESSAGEBIRD_CHANNEL_ID,
@@ -22,6 +24,14 @@ app.use(bodyParser.urlencoded({ extended : true }))
 
 app.get('/', (req, res) => {
     res.send('Welcome to ATB Whatsapp Engine 1.0')
+})
+
+let query = 'SELECT * FROM roles'
+db.query(query, (error, result, fields)=> {
+    if(error) {
+        return console.log(error)
+    }
+    console.log(result)
 })
 
 //Get Messagebird Credit Balance
@@ -130,6 +140,11 @@ app.post('/reply', (req, res)=> {
         }
         res.send(response);
       });
+})
+
+//Receive Message from webhook
+app.post('/message', (req, res) => {
+    let payload = req
 })
 
 //Message Logs by Date
