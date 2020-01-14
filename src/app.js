@@ -2,6 +2,8 @@ const express = require('express')
 const app = express()
 const dotenv = require('dotenv')
 const bodyParser = require('body-parser')
+const db = require('./db')
+
 dotenv.config()
 const accessKey = process.env.MESSAGEBIRD_ACCESS_KEY,
     channelId = process.env.MESSAGEBIRD_CHANNEL_ID,
@@ -130,6 +132,11 @@ app.post('/reply', (req, res)=> {
         }
         res.send(response);
       });
+})
+
+//Receive Message from webhook
+app.post('/message', (req, res) => {
+    let payload = req
 })
 
 //Message Logs by Date
