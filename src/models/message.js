@@ -4,6 +4,7 @@ const mongoose = require('mongoose'),
       const Message = mongoose.model('Message', {
         userConvId: {
             type: String,
+            unique: true,
             required: true,
             trim: true
         },
