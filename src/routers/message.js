@@ -35,13 +35,13 @@ router.post('/start', (req, res)=> {
     let to = req.body.recipient,
         templateName = req.body.templateName
     let payload = {
-        'to': '2347085183282',
+        to,
         channelId,
-        'type': 'hsm',
-        'content': {
+        type: 'hsm',
+        content: {
                 'hsm': {
                 'namespace': 'eb4d5655_295e_4ada_8614_702a0efe2c85',
-                'templateName': 'verification',
+                templateName,
                 'language': {
                     'policy': 'deterministic',
                     'code': 'en'
