@@ -1,8 +1,9 @@
 const express = require('express')
+const router = express.Router()
 const app = express()
 const dotenv = require('dotenv')
 const bodyParser = require('body-parser')
-const db = require('./db')
+const db = require('./db/mongoose')
 
 dotenv.config()
 const accessKey = process.env.MESSAGEBIRD_ACCESS_KEY,
@@ -24,14 +25,6 @@ app.use(bodyParser.urlencoded({ extended : true }))
 
 app.get('/', (req, res) => {
     res.send('Welcome to ATB Whatsapp Engine 1.0')
-})
-
-let query = 'SELECT * FROM roles'
-db.query(query, (error, result, fields)=> {
-    if(error) {
-        return console.log(error)
-    }
-    console.log(result)
 })
 
 //Get Messagebird Credit Balance
