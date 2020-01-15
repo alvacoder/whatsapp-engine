@@ -5,6 +5,7 @@ const mongoose = require('mongoose'),
       const User = mongoose.model('Task', {
         phone: {
             type: String,
+            unique: true,
             required: true,
             trim: true
         },

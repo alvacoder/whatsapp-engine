@@ -64,4 +64,22 @@ router.post('/start', (req, res)=> {
     })
 })
 
+//save conversation ID and user phone when sandbox is joined
+router.post('/message', async (req, res)=> {
+    const phone = req.body.contact.msisdn
+     convId = req.body.conversation.id,
+     content = req.body.message.content.text
+
+     const user = new User({
+         phone,
+         convId
+     })
+
+     try {
+         await user.save()
+     } catch (error) {
+         res.status(400).send()
+     }
+})
+
 module.exports = router
