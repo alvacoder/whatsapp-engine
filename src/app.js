@@ -1,9 +1,10 @@
 const express = require('express')
-const router = express.Router()
 const app = express()
 const dotenv = require('dotenv')
-const bodyParser = require('body-parser')
 const db = require('./db/mongoose')
+
+const userRouter = require('./routers/user')
+const messageRouter = require('./routers/message')
 
 dotenv.config()
 const accessKey = process.env.MESSAGEBIRD_ACCESS_KEY,
@@ -13,15 +14,16 @@ const accessKey = process.env.MESSAGEBIRD_ACCESS_KEY,
     convHookUrl = process.env.MESSAGEBIRD_CONV_HOOK
 
 
+const port = process.env.PORT || 3800
+
+app.use(userRouter)
+app.use(messageRouter)
+
 
 const messagebird = require('messagebird')(accessKey, null, ["ENABLE_CONVERSATIONSAPI_WHATSAPP_SANDBOX"])
 const conversations = messagebird.conversations,
       webhooks = conversations.webhooks
 
-const port = process.env.PORT || 3800
-
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended : true }))
 
 app.get('/', (req, res) => {
     res.send('Welcome to ATB Whatsapp Engine 1.0')
@@ -34,8 +36,10 @@ app.get('/balance', async (req, res) => {
         return console.log(err);
         }
         console.log(data);
-        res.send(data)
-    });
+        return data;
+    })
+
+    res.send(balance)
 })
 
 //create messages webhooks
