@@ -1,8 +1,13 @@
-const express = require('express')
-const app = express()
-const dotenv = require('dotenv')
-const bodyParser = require('body-parser')
-dotenv.config()
+/** 
+ * @author : Adeniji Idris B. (@realprinceviper) 
+ * @date : 2020-01-22 09:41:20 **/ 
+ 
+require('dotenv').config()
+
+const express = require('express'),
+      app = express(),
+      bodyParser = require('body-parser')
+
 const accountSid = process.env.TWILIO_ACCOUNT_SID
 const authToken = process.env.TWILIO_AUTH_TOKEN
 const statusCallback = process.env.TWILIO_STATUS_CALLBACK
@@ -10,9 +15,9 @@ const replyURL = process.env.TWILIO_REPLY_URL
 
 const twilio = require('twilio')
 const client = new twilio(accountSid, authToken)
-const port = process.env.PORT || 3000
 
-app.use(express.json())
+const routerConfig = require('./routers/config')
+app.use('/', routerConfig)
 
 // Send message
 app.post('/send', (req, res) => {
@@ -63,6 +68,8 @@ app.get('/chat/:recipient', async(req, res)=> {
         res.status(400).send();
     }
 })
+
+const port = process.env.PORT || 3000
 
 app.listen(port, ()=> {
     console.log('app running on port ', port)
