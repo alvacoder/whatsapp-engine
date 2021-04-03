@@ -1,1 +1,1 @@
-Whatsapp Business Microservice developed for ATB Techsoft Solutions
+Simple Whatsapp Business Microservice developed using MessageBird Whatsapp API
